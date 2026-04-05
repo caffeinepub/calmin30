@@ -1,0 +1,313 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: "Figtree";
+  src: url("/assets/fonts/Figtree.woff2") format("woff2");
+  font-weight: 300 900;
+  font-display: swap;
+}
+
+@layer base {
+  :root {
+    --radius: 1rem;
+
+    /* Calm palette — light mode */
+    --background: 0.98 0.008 220;
+    --foreground: 0.18 0.02 250;
+    --card: 1 0 0;
+    --card-foreground: 0.18 0.02 250;
+    --popover: 1 0 0;
+    --popover-foreground: 0.18 0.02 250;
+    --primary: 0.72 0.08 230;
+    --primary-foreground: 1 0 0;
+    --secondary: 0.94 0.04 220;
+    --secondary-foreground: 0.18 0.02 250;
+    --muted: 0.95 0.02 220;
+    --muted-foreground: 0.42 0.02 250;
+    --accent: 0.8 0.09 285;
+    --accent-foreground: 0.18 0.02 250;
+    --destructive: 0.577 0.245 27.325;
+    --destructive-foreground: 0.985 0 0;
+    --border: 0.9 0.04 220;
+    --input: 0.9 0.04 220;
+    --ring: 0.72 0.08 230;
+
+    /* Hero gradient stops */
+    --hero-from: oklch(0.9 0.06 215);
+    --hero-to: oklch(0.82 0.09 285);
+
+    /* Breathing ring */
+    --ring-blue: oklch(0.75 0.1 225);
+    --ring-purple: oklch(0.68 0.14 290);
+    --ring-teal: oklch(0.75 0.1 195);
+
+    --chart-1: 0.646 0.222 41.116;
+    --chart-2: 0.6 0.118 184.704;
+    --chart-3: 0.398 0.07 227.392;
+    --chart-4: 0.828 0.189 84.429;
+    --chart-5: 0.769 0.188 70.08;
+    --sidebar: 0.985 0 0;
+    --sidebar-foreground: 0.145 0 0;
+    --sidebar-primary: 0.205 0 0;
+    --sidebar-primary-foreground: 0.985 0 0;
+    --sidebar-accent: 0.97 0 0;
+    --sidebar-accent-foreground: 0.205 0 0;
+    --sidebar-border: 0.922 0 0;
+    --sidebar-ring: 0.708 0 0;
+  }
+
+  /* Dark mode — starry night sky: deep navy/indigo with soft purples */
+  .dark {
+    --background: 0.15 0.04 265;
+    --foreground: 0.92 0.01 265;
+    --card: 0.2 0.04 265;
+    --card-foreground: 0.92 0.01 265;
+    --popover: 0.2 0.04 265;
+    --popover-foreground: 0.92 0.01 265;
+    --primary: 0.68 0.1 285;
+    --primary-foreground: 0.98 0 0;
+    --secondary: 0.25 0.05 270;
+    --secondary-foreground: 0.88 0.02 265;
+    --muted: 0.25 0.03 265;
+    --muted-foreground: 0.65 0.04 265;
+    --accent: 0.55 0.14 290;
+    --accent-foreground: 0.95 0.01 265;
+    --destructive: 0.55 0.22 27;
+    --destructive-foreground: 0.98 0 0;
+    --border: 0.28 0.04 265;
+    --input: 0.28 0.04 265;
+    --ring: 0.65 0.12 285;
+
+    --hero-from: oklch(0.18 0.07 265);
+    --hero-to: oklch(0.16 0.09 290);
+
+    --sidebar: 0.18 0.04 265;
+    --sidebar-foreground: 0.88 0.02 265;
+    --sidebar-primary: 0.65 0.1 285;
+    --sidebar-primary-foreground: 0.98 0 0;
+    --sidebar-accent: 0.25 0.05 270;
+    --sidebar-accent-foreground: 0.88 0.02 265;
+    --sidebar-border: 0.28 0.04 265;
+    --sidebar-ring: 0.65 0.12 285;
+  }
+
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground font-body;
+    scroll-behavior: smooth;
+    /* Removed `color` from transition — it causes child text to flash during mode switch */
+    transition: background-color 0.4s ease;
+  }
+
+  html.dark {
+    color-scheme: dark;
+  }
+}
+
+@layer utilities {
+  .hero-gradient {
+    background: linear-gradient(
+      135deg,
+      var(--hero-from) 0%,
+      var(--hero-to) 100%
+    );
+  }
+
+  /* Light mode text gradient */
+  .text-gradient {
+    background: linear-gradient(
+      135deg,
+      oklch(0.48 0.12 230),
+      oklch(0.55 0.16 290)
+    );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Dark mode text gradient — much brighter for visibility */
+  .dark .text-gradient {
+    background: linear-gradient(
+      135deg,
+      oklch(0.85 0.16 230),
+      oklch(0.82 0.18 290)
+    );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .card-calm {
+    background: oklch(1 0 0 / 0.85);
+    backdrop-filter: blur(12px);
+    box-shadow: 0 4px 24px oklch(0.18 0.02 250 / 0.08);
+    border: 1px solid oklch(0.9 0.04 220);
+    border-radius: var(--radius);
+    transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow
+      0.2s ease, background-color 0.4s ease;
+  }
+  .card-calm:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px oklch(0.18 0.02 250 / 0.14);
+  }
+
+  .dark .card-calm {
+    background: oklch(0.22 0.05 265 / 0.9);
+    border-color: oklch(0.32 0.06 270 / 0.5);
+    box-shadow: 0 4px 24px oklch(0.08 0.04 265 / 0.4);
+  }
+  .dark .card-calm:hover {
+    box-shadow: 0 12px 40px oklch(0.65 0.12 285 / 0.2);
+  }
+
+  .btn-calm {
+    background: oklch(0.72 0.08 230);
+    color: white;
+    border-radius: 9999px;
+    padding: 0.65rem 1.75rem;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    transition: background 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
+    box-shadow: 0 2px 12px oklch(0.72 0.08 230 / 0.35);
+  }
+  .btn-calm:hover {
+    background: oklch(0.66 0.1 230);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px oklch(0.72 0.08 230 / 0.45);
+  }
+  .btn-calm:active {
+    transform: translateY(0);
+  }
+
+  .dark .btn-calm {
+    background: oklch(0.6 0.12 285);
+    box-shadow: 0 2px 12px oklch(0.6 0.12 285 / 0.4);
+  }
+  .dark .btn-calm:hover {
+    background: oklch(0.55 0.14 285);
+    box-shadow: 0 6px 20px oklch(0.6 0.12 285 / 0.5);
+  }
+
+  /* Wind float animation for "Just Breathe" — no opacity change, never invisible */
+  @keyframes wind-float {
+    0% {
+      transform: translateX(0px) rotate(-0.5deg);
+    }
+    25% {
+      transform: translateX(6px) rotate(0.8deg);
+    }
+    50% {
+      transform: translateX(-4px) rotate(-0.3deg);
+    }
+    75% {
+      transform: translateX(8px) rotate(0.5deg);
+    }
+    100% {
+      transform: translateX(0px) rotate(-0.5deg);
+    }
+  }
+  .wind-float {
+    animation: wind-float 4s ease-in-out infinite;
+    display: inline-block;
+    /* Prevent color inheritance from animated body transition */
+    transition: color 0s;
+  }
+
+  .breathing-glow {
+    filter: drop-shadow(0 0 18px oklch(0.75 0.1 225 / 0.6));
+  }
+
+  @keyframes pulse-dot {
+    0%,
+    100% {
+      transform: scale(1);
+      opacity: 0.85;
+    }
+    50% {
+      transform: scale(1.35);
+      opacity: 1;
+    }
+  }
+  .pulse-dot {
+    animation: pulse-dot 3s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+  }
+
+  @keyframes gradient-drift {
+    0%,
+    100% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+  }
+  .gradient-drift {
+    background-size: 200% 200%;
+    animation: gradient-drift 8s ease infinite;
+  }
+
+  @keyframes fade-in-up {
+    from {
+      opacity: 0;
+      transform: translateY(24px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  .fade-in-up {
+    animation: fade-in-up 0.6s cubic-bezier(0.34, 1.1, 0.64, 1) both;
+  }
+  .delay-100 {
+    animation-delay: 0.1s;
+  }
+  .delay-200 {
+    animation-delay: 0.2s;
+  }
+  .delay-300 {
+    animation-delay: 0.3s;
+  }
+  .delay-400 {
+    animation-delay: 0.4s;
+  }
+
+  @keyframes leaf-float {
+    0%,
+    100% {
+      transform: translateY(0) rotate(0deg);
+    }
+    50% {
+      transform: translateY(-12px) rotate(3deg);
+    }
+  }
+  .leaf-float {
+    animation: leaf-float 6s ease-in-out infinite;
+  }
+
+  /* Dark mode star twinkle */
+  @keyframes star-twinkle {
+    0%,
+    100% {
+      opacity: 0.3;
+    }
+    50% {
+      opacity: 0.9;
+    }
+  }
+  .dark .star-bg {
+    animation: star-twinkle 3s ease-in-out infinite;
+  }
+
+  /* Dark mode section backgrounds */
+  .dark .section-light {
+    background: oklch(0.17 0.05 265) !important;
+  }
+  .dark .section-alt {
+    background: oklch(0.19 0.05 270) !important;
+  }
+}
